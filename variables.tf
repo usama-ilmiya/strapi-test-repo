@@ -15,8 +15,10 @@ variable "shared_vpc_name" {
 
 variable "shared_network_name" {
   description = "The name of the shared VPC network"
-  default = "shared_network_ilmiya_1"
+  type        = string
+  default     = "shared-network-ilmiya-1" // Example of a valid name
 }
+
 
 variable "subnet_name" {
   description = "The name of the subnet"
