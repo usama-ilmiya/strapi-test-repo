@@ -20,7 +20,7 @@ variable "shared_vpc_name" {
 variable "shared_network_name" {
   description = "The name of the shared VPC network"
   type        = string
-  default = "amer"
+  default = "ilmiya-shared-network-dev"
 }
 
 variable "subnet_name" {
