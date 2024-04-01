@@ -20,9 +20,11 @@ jobs:
           terraform_version: latest
 
       - name: Authenticate with Google Cloud
-        uses: google-github-actions/auth@v1
-        with:
-          credentials_json: ${{ secrets.GCP_SA_KEY }}
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
+        run: |
+          echo "$GOOGLE_APPLICATION_CREDENTIALS" > gcp_credentials.json
+          gcloud auth activate-service-account --key-file=gcp_credentials.json
 
       - name: Terraform Init
         run: terraform init
