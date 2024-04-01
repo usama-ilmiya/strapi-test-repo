@@ -18,19 +18,6 @@ resource "google_compute_subnetwork" "shared_subnet" {
   ip_cidr_range = var.subnet_cidr
 }
 
-# Set up IAM roles for shared VPC
-resource "google_project_iam_member" "shared_vpc_admin" {
-  project = var.project_id
-  role    = "roles/compute.networkAdmin"
-  member  = "serviceAccount:service-${var.project_id}@gcp-sa-terraform.iam.gserviceaccount.com"
-}
-
-resource "google_project_iam_member" "shared_subnet_user" {
-  project = var.project_id
-  role    = "roles/compute.networkUser"
-  member  = "serviceAccount:service-${var.project_id}@gcp-sa-terraform.iam.gserviceaccount.com"
-}
-
 # Create required firewall rules
 resource "google_compute_firewall" "allow_ingress" {
   name    = "allow-ingress"
