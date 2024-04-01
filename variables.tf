@@ -1,6 +1,6 @@
 variable "project_id" {
   description = "The ID of the GCP project"
-  default = "env-ilmiya-dev"
+  default     = "env-ilmiya-dev"
 }
 
 variable "region" {
@@ -15,12 +15,12 @@ variable "shared_vpc_name" {
 
 variable "shared_network_name" {
   description = "The name of the shared VPC network"
-  default = "shared_network_ilmiya_1"
+  default     = "shared_network_ilmiya_1"
 }
 
 variable "subnet_name" {
   description = "The name of the subnet"
-  default = "shared_subnet_ilmiya_1"
+  default     = "shared_subnet_ilmiya_1"
 }
 
 variable "subnet_cidr" {

@@ -1,11 +1,11 @@
 provider "google" {
-  project = var.project_id
+  project = "env-ilmiya-dev"  # Replace with your actual project ID
   region  = var.region
 }
 
 # Create the shared VPC network in the host project
 resource "google_compute_shared_vpc_host_project" "host_project" {
-  project = var.project_id
+  project = "env-ilmiya-net"  # Replace with your actual host project name
 }
 
 # Define the shared VPC network
