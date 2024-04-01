@@ -1,6 +1,6 @@
 variable "project_id" {
   description = "The ID of the GCP project"
-  default = "gmzdev"
+  default = "env-ilmiya-dev"
 }
 
 variable "region" {
@@ -15,10 +15,8 @@ variable "shared_vpc_name" {
 
 variable "shared_network_name" {
   description = "The name of the shared VPC network"
-  type        = string
-  default     = "shared-network-ilmiya-1" // Example of a valid name
+  default = "shared_network_ilmiya_1"
 }
-
 
 variable "subnet_name" {
   description = "The name of the subnet"
