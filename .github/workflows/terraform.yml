@@ -1,4 +1,4 @@
-name: Deploy Shared VPC
+name: Terraform GitHub Actions
 
 on:
   push:
@@ -7,31 +7,24 @@ on:
 
 jobs:
   terraform:
-    name: Deploy
+    name: Terraform Deploy
     runs-on: ubuntu-latest
-    
     steps:
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Set up Terraform
+      - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
-          terraform_version: latest
-
-      - name: Authenticate with Google Cloud
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
-        run: |
-          echo "$GOOGLE_APPLICATION_CREDENTIALS" > gcp_credentials.json
-          gcloud auth activate-service-account --key-file=gcp_credentials.json
+          tf_version: latest
 
       - name: Terraform Init
         run: terraform init
 
       - name: Terraform Plan
-        run: terraform plan -out=tfplan
-      
+        run: terraform plan
+
       - name: Terraform Apply
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: terraform apply -auto-approve tfplan
+        run: terraform apply -auto-approve
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
