@@ -1,37 +1,41 @@
 variable "project_id" {
-  description = "The ID of the GCP project"
+  description = "GCP Project ID"
   type        = string
-  default = "env-ilmiya-dev"
+  default     = "env-ilmiya-dev"
 }
 
 variable "region" {
-  description = "The region in which the resources will be created"
+  description = "GCP region"
   type        = string
-  default = "us-central1"
-
+  default     = "us-east1"
 }
 
-variable "shared_vpc_name" {
-  description = "The name of the shared VPC host project"
+variable "zone" {
+  description = "GCP zone"
   type        = string
-  default = "ilmiya-shared-vpc-dev"
+  default     = "us-east1-c"
 }
 
-variable "shared_network_name" {
-  description = "The name of the shared VPC network"
+variable "vpc_network" {
+  description = "Name of the VPC network"
   type        = string
-  default = "ilmiya-shared-network-dev"
+  default     = "strapi-network"
 }
 
-variable "subnet_name" {
-  description = "The name of the subnet"
+variable "instance_name" {
+  description = "Name of the VM instance"
   type        = string
-  default = "ilmiya-subnet-dev"
-
+  default     = "strapi-vm"
 }
 
-variable "subnet_cidr" {
-  description = "CIDR block for the subnet"
+variable "machine_type" {
+  description = "Type of machine for the VM instance"
   type        = string
-  default = "10.10.0.0/24"
+  default     = "e2-medium"
+}
+
+variable "image" {
+  description = "Operating system image for the VM instance"
+  type        = string
+  default     = "ubuntu-os-cloud/ubuntu-2204-lts"
 }
