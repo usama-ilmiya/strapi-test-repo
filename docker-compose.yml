@@ -1,15 +1,55 @@
-version: "3"
+version: "3.4"
 
 services:
-  strapi:
-    build: .
-    restart: always
-    ports:
-      - "1337:1337"
+  postgresql:
+    image: docker.io/library/postgres:12-alpine
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
+    volumes:
+      - database:/var/lib/postgresql/data
     environment:
-      DATABASE_CLIENT: ${DATABASE_CLIENT:-sqlite}
-      DATABASE_HOST: ${DATABASE_HOST:-localhost}
-      DATABASE_PORT: ${DATABASE_PORT:-5432}
-      DATABASE_NAME: ${DATABASE_NAME:-strapi}
-      DATABASE_USERNAME: ${DATABASE_USERNAME:-strapi}
-      DATABASE_PASSWORD: ${DATABASE_PASSWORD:-strapi}
+      POSTGRES_PASSWORD: ${PG_PASS:?database password required}
+      POSTGRES_USER: ${PG_USER:-strapi}
+      POSTGRES_DB: ${PG_DB:-strapi}
+    env_file:
+      - .env
+  redis:
+    image: docker.io/library/redis:alpine
+    command: --save 60 1 --loglevel warning
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 3s
+    volumes:
+      - redis:/data
+  strapi:
+    image: strapi/strapi:3.6.8
+    restart: unless-stopped
+    command: develop
+    environment:
+      DATABASE_CLIENT: postgres
+      DATABASE_HOST: postgresql
+      DATABASE_PORT: 5432
+      DATABASE_NAME: ${PG_DB:-strapi}
+      DATABASE_USERNAME: ${PG_USER:-strapi}
+      DATABASE_PASSWORD: ${PG_PASS}
+      DATABASE_SSL: "false" # Change to "true" if using SSL
+    ports:
+      - "${COMPOSE_PORT_HTTP:-1337}:1337"
+    depends_on:
+      - postgresql
+      - redis
+
+volumes:
+  database:
+    driver: local
+  redis:
+    driver: local
