@@ -1,7 +1,7 @@
 variable "project_id" {
   description = "GCP Project ID"
   type        = string
-  default     = "env-ilmiya-corp"
+  default     = "env-ilmiya-dev"
 }
 
 variable "region" {
