@@ -18,3 +18,4 @@ EXPOSE 1337
 
 # Command to start the Strapi server
 CMD ["npm", "start"]
+
