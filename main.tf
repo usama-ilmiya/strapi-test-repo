@@ -79,6 +79,9 @@ sudo apt-get install -y docker.io
 # Pull Strapi Docker image
 sudo docker pull strapi/strapi
 
+#wait for 1 min before starting the strapi container
+sleep 60
+
 # Run Strapi Docker container
 sudo docker run -d --name=strapi -p 80:1337 strapi/strapi
 EOF
