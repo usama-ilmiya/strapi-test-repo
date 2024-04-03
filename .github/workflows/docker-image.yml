@@ -20,9 +20,7 @@ jobs:
       - name: Setup GCP Credentials
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
-        run: |
-          echo "$GOOGLE_CREDENTIALS" > gcp-credentials.json
-          echo "GOOGLE_APPLICATION_CREDENTIALS=${PWD}/gcp-credentials.json" >> $GITHUB_ENV
+       
 
       - name: Terraform Init
         run: terraform init

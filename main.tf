@@ -69,15 +69,12 @@ resource "google_compute_instance" "strapi" {
     }
   }
 
-  metadata_startup_script = <<EOF
+  metadata_startup_script = <<-EOF
 #!/bin/bash
 
 # Update and install dependencies
 sudo apt-get update
-sudo apt-get install -y docker.io docker-compose wget
-
-# Enable IP forwarding
-sudo sysctl -w net.ipv4.ip_forward=1
+sudo apt-get install -y docker.io
 
 # Pull Strapi Docker image
 sudo docker pull strapi/strapi
