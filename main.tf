@@ -80,6 +80,10 @@ sudo apt-get install -y docker.io
 sudo docker pull strapi/strapi
 
 # Run Strapi Docker container
-sudo docker run -d --name=strapi -p 1337:1337 strapi/strapi
+sudo docker run -d --name=strapi -p 80:1337 strapi/strapi
 EOF
+}
+
+output "instance_ip" {
+  value = google_compute_instance.strapi.network_interface[0].access_config[0].nat_ip
 }
